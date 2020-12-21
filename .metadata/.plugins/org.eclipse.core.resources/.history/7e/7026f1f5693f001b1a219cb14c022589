@@ -1,0 +1,49 @@
+package com.bankapplication.test.maven;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.bankapplication.maven.BankAccount;
+
+public class BankAccountTest {
+
+	BankAccount acc;
+
+    @Before                        // This will run **before** EACH @Test
+    public void setUptestDepositUpdatesBalance(){
+        acc = new BankAccount(100);  
+    } 
+
+    @After                        // This Will run **after** EACH @Test
+    public void tearDown(){
+    // clean up code
+    }
+
+    @Test
+    public void testDeposit(){
+       // no need to instantiate a new BankAccount(), @Before does it for us
+
+        acc.deposit(100);
+
+        assertEquals(acc.getBalance(),200); 
+    }
+
+    @Test
+    public void testWithdrawUpdatesBalance(){    
+        acc.withdraw(30);
+
+        assertEquals(acc.getBalance(),70); // pass
+    }
+
+    @Test
+    public void testWithdrawAppliesPenaltyWhenOverdrawn(){
+
+        acc.withdraw(120);
+
+        assertEquals(acc.getBalance(),-30);
+    }
+
+}

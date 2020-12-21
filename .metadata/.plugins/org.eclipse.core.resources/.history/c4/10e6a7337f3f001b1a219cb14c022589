@@ -1,0 +1,46 @@
+package com.bankapplication.maven;
+
+/**
+ * Creation of BankAccount class to check transactions.
+ * @author NP086260
+ */
+public class BankAccount {
+    private int balance;
+    
+    /**
+     * A minimum bank balance of the user.
+     * @param i
+     */
+    public BankAccount(int i){
+        balance = i;
+    }
+    
+    /**
+     * Returns the balance in the account of the user.
+     * @return balance
+     */
+    public int getBalance(){
+        return balance;
+    }
+    
+    /**
+     * Deposits a certain amount to bank.
+     * @param i
+     */
+    public void deposit(int i){
+    	if (i >= 0) {
+    		balance += i;
+    	}
+    }
+    
+    /**
+     * Withdraws a certain amount from bank.
+     * @param i
+     */
+    public void withdraw(int i){
+        balance -= i;
+        if (balance < 0){
+            balance -= 10; // penalty if overdrawn
+        }
+    }
+}

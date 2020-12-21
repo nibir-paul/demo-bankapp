@@ -1,0 +1,41 @@
+package com.bankapplication.maven;
+
+public class Account {
+	
+	protected double bal;
+	
+	public Account(double amt) {
+		bal = amt;
+	}
+	
+	public Account(Account acc) {
+		bal = acc.balance();
+	}
+	
+	public void transfer(double amt, Account acc) throws Exception {
+		acc.withdraw(amt);
+		deposit(amt);
+	}
+	
+	public void withdraw(double amt) throws Exception {
+		if (checkSufficientFunds(amt))
+			bal -= amt;
+		else
+			throw new Exception("Insufficient funds.");
+	}
+	
+	public void deposit(double amt) {
+		bal += amt;
+	}
+	
+	public int balance() {
+		return bal;
+	}
+	
+	private boolean checkSufficientFunds(int amt) {
+		if (bal >= amt)
+			return true;
+		else
+			return false;
+	}
+}

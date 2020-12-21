@@ -1,0 +1,166 @@
+package com.bankapplication.maven;
+
+import java.util.Scanner;
+import java.lang.Math;
+
+public class BankAccount {
+	
+	public int balance;
+    private int previousTransaction;
+    private String customerName;
+    private String customerId;
+
+    /**
+     * A constructor class to initialize the name and ID.
+     * 
+     * @param cname
+     * @param cid
+     */
+    public BankAccount(String cname, String cid) {
+        customerName = cname;
+        customerId = cid;
+    }
+
+    /**
+     * A method that calculates the amount being deposited in the account.
+     * 
+     * @param amount
+     * @return
+     */
+    public int deposit(int amount) {
+        if (amount >= 0) {
+            balance = balance + amount;
+            previousTransaction = amount;
+            return balance;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * A method that calculates the amount getting withdrawn from the bank.
+     * 
+     * @param amount
+     * @return
+     */
+    public int withdraw(int amount) {
+        if (amount < balance) {
+            balance = balance - amount;
+            previousTransaction = -amount;
+            return balance;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Shows the last transaction.
+     */
+    public void getPreviousTransaction() {
+        if (previousTransaction > 0) {
+            System.out.println("Deposited: " + previousTransaction);
+        } else if (previousTransaction < 0) {
+            System.out.println("Withdrawn: " + Math.abs(previousTransaction));
+        } else {
+            System.out.println("No transaction done.");
+        }
+    }
+
+    /**
+     * Original method where the user gives the options.
+     */
+    public void showMenu() {
+
+        char option = '\0';
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Welcome " + customerName);
+        System.out.println("Your ID is: " + customerId);
+        System.out.println("\n");
+        System.out.println("A. Check Balance");
+        System.out.println("B. Deposit");
+        System.out.println("C. Withdraw");
+        System.out.println("D. Previous Transaction");
+        System.out.println("E. Exit");
+
+        do {
+            System.out.println(
+                    "========================================================================================");
+            System.out.println("Enter an option");
+            System.out.println(
+                    "========================================================================================");
+            option = sc.next().charAt(0);
+            System.out.println("\n");
+
+            switch (option) {
+                case 'A':
+                    System.out.println("-----------------------------------");
+                    System.out.println("Balance = " + balance);
+                    System.out.println("-----------------------------------");
+                    System.out.println("\n");
+                    break;
+
+                case 'B':
+                    System.out.println("-----------------------------------");
+                    System.out.println("Enter an amount to be deposited.");
+                    System.out.println("-----------------------------------");
+                    int amt = sc.nextInt();
+                    int bal = deposit(amt);
+                    if (bal == 0) {
+                        System.out.println("\nAmount can't be deposited.");
+                        System.out.println("Balance = " + balance);
+                    } else {
+                        System.out.println("\nAmount deposited.");
+                        System.out.println("Balance = " + balance);
+                    }
+                    System.out.println("\n");
+                    break;
+
+                case 'C':
+                    System.out.println("-----------------------------------");
+                    System.out.println("Enter an amount to be witdrawn.");
+                    System.out.println("-----------------------------------");
+                    int amt2 = sc.nextInt();
+                    int bal2 = withdraw(amt2);
+                    if (bal2 == 0) {
+                        System.out.println("\nAmount can't be withdrawn.");
+                        System.out.println("Balance = " + balance);
+                    } else {
+                        System.out.println("\nAmount withdrawn.");
+                        System.out.println("Balance = " + balance);
+                    }
+                    System.out.println("\n");
+                    break;
+
+                case 'D':
+                    System.out.println("-----------------------------------");
+                    getPreviousTransaction();
+                    System.out.println("-----------------------------------");
+                    System.out.println("\n");
+                    break;
+
+                case 'E':
+                    System.out.println("***********************************");
+                    break;
+
+                default:
+                    System.out.println("Invalid option!");
+                    break;
+            }
+
+        } while (option != 'E');
+
+        System.out.println("Thank You for using our services!!");
+        sc.close();
+    }
+
+    /**
+     * Checks the bank balance.
+     * 
+     * @param args The arguments of the program.
+     */
+    public static void main(String[] args) {
+        BankAccount obj = new BankAccount("Nibir", "NP086260");
+        obj.showMenu();
+    }
+}

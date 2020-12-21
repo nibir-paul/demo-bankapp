@@ -1,0 +1,5 @@
+package com.bankapplication.maven;
+
+public class SavingsAccount {
+
+}

@@ -1,0 +1,75 @@
+package com.bankapplication.test.maven;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.FixMethodOrder;
+import org.junit.rules.ExpectedException;
+import org.junit.runners.MethodSorters;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import com.bankapplication.exceptions.maven.WrongAmountException;
+import com.bankapplication.maven.BankAccount;
+
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class BankAccountTest {
+	
+	//private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+	
+	BankAccount acc;
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
+	@Before
+	public void setUptestDepositUpdatesBalance(){
+		acc = new BankAccount(100); 
+		//System.setOut(new PrintStream(outputStreamCaptor));
+	} 
+	
+	@After
+	public void tearDown(){
+		acc = null;
+	}
+	
+	@Test
+	public void testDepositUpdatesBalance() throws WrongAmountException{
+		acc.deposit(100);
+		assertEquals(acc.getBalance(), 200);
+	}
+	
+	@Test
+	public void testDepositeNotUpdateBalance() throws WrongAmountException {
+		acc.deposit(-100);
+		assertEquals(acc.getBalance(), 100);
+	}
+	
+	@Test
+	public void testAmountGreaterThan20K() throws WrongAmountException {
+		exception.expect(WrongAmountException.class);
+		exception.expectMessage("Amount greater than 20000 can't be deposited.");
+		
+		acc.deposit(21000);
+	}
+	
+	@Test
+	public void testWithdrawUpdatesBalance(){
+    	acc.withdraw(30);
+    	assertEquals(acc.getBalance(), 70);
+    }
+	/**
+	 * 
+	 * @throws Exception
+	 
+	@Test
+    public void testWithdrawForAmountGreaterThanBalance() throws Exception {
+		acc.withdraw(300);
+	    assertEquals("Not enough balance", outputStreamCaptor.toString().trim());
+    }
+    */
+}

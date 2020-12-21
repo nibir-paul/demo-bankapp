@@ -1,0 +1,5 @@
+package com.bankapplication.maven.exceptions;
+
+public class InsufficientFundsException {
+
+}

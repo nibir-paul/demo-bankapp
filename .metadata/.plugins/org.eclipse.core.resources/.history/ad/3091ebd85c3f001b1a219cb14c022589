@@ -1,0 +1,14 @@
+package com.bankapplication.test.maven;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class Bank {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

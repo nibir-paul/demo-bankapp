@@ -1,0 +1,67 @@
+package com.bankapplication.test.maven;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.bankapplication.exceptions.maven.WrongAmountException;
+import com.bankapplication.maven.BankAccount;
+
+public class BankAccountTest {
+	
+	BankAccount acc;
+	
+	@Before
+	public void setUptestDepositUpdatesBalance(){
+		acc = new BankAccount(100);  
+	} 
+	
+	@After
+	public void tearDown(){
+		
+	}
+	
+	@Test
+	public void testDepositUpdatesBalance(){
+    	try {
+			acc.deposit(100);
+			assertEquals(acc.getBalance(),200); 
+		} catch (WrongAmountException e) {
+			//assertEquals("Amount greater than 20000 can't be deposited.", e.getMessage());
+		}
+    }
+	
+	@Test
+	public void testDepositeNotUpdateBalance() {
+		try {
+			acc.deposit(-100);
+			assertEquals(acc.getBalance(),100); 
+		} catch (WrongAmountException e) {
+			//assertEquals("Amount greater than 20000 can't be deposited.", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAmountGreaterThan20K() {
+		try {
+			acc.deposit(21000);
+			fail();
+		} catch (WrongAmountException e) {
+			assertEquals("Amount greater than 20000 can't be deposited.", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testWithdrawUpdatesBalance(){
+    	acc.withdraw(30);
+    	assertEquals(acc.getBalance(),70);
+    }
+	
+	@Test
+	public void testWithdrawAppliesPenaltyWhenOverdrawn(){
+    	acc.withdraw(120);
+    	assertEquals(acc.getBalance(),-30);
+    }
+}
